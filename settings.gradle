@@ -1,13 +1,27 @@
 pluginManagement {
 	repositories {
+//		flatDir { dirs 'libs' }
 		google()
 		mavenCentral()
+		gradlePluginPortal()
 		maven { url 'https://jitpack.io' }
 	}
+}
+plugins {
+	id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
 }
 dependencyResolutionManagement {
 	repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
 	repositories {
+//		exclusiveContent {
+//			forRepository {
+////				flatDir { dirs 'libs' }
+//				mavenLocal()
+//			}
+//			filter {
+//				includeGroup "io.tolgee"
+//			}
+//		}
 		google()
 		mavenCentral()
 		maven { url 'https://jitpack.io' }

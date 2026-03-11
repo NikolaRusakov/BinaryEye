@@ -79,6 +79,12 @@ dependencies {
 	implementation 'com.github.markusfisch:CameraView:1.10.0'
 	implementation 'com.github.markusfisch:ScalingImageView:1.4.3'
 	implementation 'com.github.markusfisch:zxing-cpp:v2.3.0.4'
+//	Local Maven package
+//	implementation 'io.tolgee:mobile-kotlin-sdk:v1.0.0-alpha04'
+//	Remote Mave package
+//	implementation 'io.tolgee:tolgee-mobile-kotlin-sdk:v1.0.0-alpha04'
+//	implementation 'com.github.tolgee:tolgee-mobile-kotlin-sdk:v1.0.0-alpha04
+	implementation 'com.github.NikolaRusakov.tolgee-mobile-kotlin-sdk:compose:v1.0.0-alpha042'
 
 	// Testing
 	testImplementation 'junit:junit:4.13.2'
