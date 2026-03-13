@@ -80,7 +80,7 @@ fun AppCompatActivity.initBars() {
 		findViewById<Toolbar>(R.id.toolbar).apply {
 			setSupportActionBar(this)
 		},
-		findViewById<Toolbar>(R.id.navbar)?.apply {
+		findViewById<View>(R.id.navbar)?.apply {
 			setBackgroundColor(translucentPrimaryColor)
 		}
 	)
@@ -125,7 +125,7 @@ fun colorSystemAndToolBars(
 				0
 			}
 		} else {
-			activity.findViewById<Toolbar>(R.id.navbar)?.apply {
+			activity.findViewById<View>(R.id.navbar)?.apply {
 				visibility = if (scrolled || scrollable) {
 					View.VISIBLE
 				} else {
