@@ -56,6 +56,7 @@ import de.markusfisch.android.zxingcpp.ZxingCpp.Binarizer
 import de.markusfisch.android.zxingcpp.ZxingCpp.ReaderOptions
 import de.markusfisch.android.zxingcpp.ZxingCpp.Result
 import de.markusfisch.android.zxingcpp.ZxingCpp.TextMode
+import io.tolgee.Tolgee
 import io.tolgee.TolgeeContextWrapper
 import java.io.FileInputStream
 import java.util.Scanner
@@ -93,7 +94,8 @@ class CameraActivity : AppCompatActivity() {
 		permissions: Array<String>,
 		grantResults: IntArray
 	) {
-		when (requestCode) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
 			PERMISSION_CAMERA -> if (grantResults.isNotEmpty() &&
 				grantResults[0] != PackageManager.PERMISSION_GRANTED
 			) {
@@ -107,7 +109,8 @@ class CameraActivity : AppCompatActivity() {
 		resultCode: Int,
 		resultData: Intent?
 	) {
-		when (requestCode) {
+        super.onActivityResult(requestCode, resultCode, resultData)
+        when (requestCode) {
 			PICK_FILE_RESULT_CODE -> {
 				if (resultCode == RESULT_OK && resultData != null) {
 					val pick = Intent(this, PickActivity::class.java)
@@ -127,10 +130,10 @@ class CameraActivity : AppCompatActivity() {
 	override fun onCreate(state: Bundle?) {
 		super.onCreate(state)
 		setContentView(R.layout.activity_camera)
-
+		val tolgee = Tolgee.instance
 		// Necessary to get the right translation after setting a
 		// custom locale.
-		setTitle(R.string.scan_code)
+		setTitle(tolgee.t(applicationContext, R.string.scan_code))
 
 		initBars()
 

@@ -3,3 +3,4 @@
 -dontwarn android.support.v8.**
 
 -keep class android.widget.SearchView { *; }
+#-keep class dev.datlag.tooling.** { *; }
