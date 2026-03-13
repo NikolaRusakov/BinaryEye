@@ -62,6 +62,7 @@ import de.markusfisch.android.binaryeye.view.hideSoftKeyboard
 import de.markusfisch.android.binaryeye.view.setPaddingFromWindowInsets
 import de.markusfisch.android.binaryeye.widget.toast
 import de.markusfisch.android.zxingcpp.ZxingCpp
+import io.tolgee.Tolgee
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -333,6 +334,8 @@ class DecodeFragment : Fragment() {
 	}
 
 	private fun TableLayout.fillDataView(text: String, bytes: ByteArray) {
+		val tolgee = Tolgee.instance
+
 		val items = LinkedHashMap<Any, CharSequence?>()
 		when (prefs.showChecksum) {
 			"CRC4" -> items[R.string.crc4] = String.format("%X", crc4(bytes))
@@ -355,9 +358,9 @@ class DecodeFragment : Fragment() {
 			is MatMsgAction -> items.putAll(
 				MatMsg(text).run {
 					mapOf(
-						R.string.email_to to to,
-						R.string.email_subject to sub,
-						R.string.email_body to body
+						tolgee.t(context, R.string.email_to) to to,
+						tolgee.t(context, R.string.email_subject) to sub,
+						tolgee.t(context, R.string.email_body) to body
 					)
 				}
 			)
@@ -377,9 +380,9 @@ class DecodeFragment : Fragment() {
 				items.putAll(
 					Uri.parse(text).run {
 						mapOf(
-							R.string.scheme to scheme,
-							R.string.host to host,
-							R.string.query to query
+							tolgee.t(context, R.string.scheme) to scheme,
+							tolgee.t(context, R.string.host) to host,
+							tolgee.t(context, R.string.query) to query
 						)
 					}
 				)
@@ -390,15 +393,15 @@ class DecodeFragment : Fragment() {
 			is WifiAction -> WifiConnector.parseMap(text)?.let { wifiData ->
 				items.putAll(
 					linkedMapOf(
-						R.string.entry_type to getString(R.string.wifi_network),
-						R.string.wifi_ssid to wifiData["S"],
-						R.string.wifi_password to wifiData["P"],
-						R.string.wifi_type to wifiData["T"],
-						R.string.wifi_hidden to wifiData["H"],
-						R.string.wifi_eap to wifiData["E"],
-						R.string.wifi_identity to wifiData["I"],
-						R.string.wifi_anonymous_identity to wifiData["A"],
-						R.string.wifi_phase2 to wifiData["PH2"]
+						tolgee.t(context, R.string.entry_type) to getString(R.string.wifi_network),
+						tolgee.t(context, R.string.wifi_ssid) to wifiData["S"],
+						tolgee.t(context, R.string.wifi_password) to wifiData["P"],
+						tolgee.t(context, R.string.wifi_type) to wifiData["T"],
+						tolgee.t(context, R.string.wifi_hidden) to wifiData["H"],
+						tolgee.t(context, R.string.wifi_eap) to wifiData["E"],
+						tolgee.t(context, R.string.wifi_identity) to wifiData["I"],
+						tolgee.t(context, R.string.wifi_anonymous_identity) to wifiData["A"],
+						tolgee.t(context, R.string.wifi_phase2) to wifiData["PH2"]
 					)
 				)
 			}

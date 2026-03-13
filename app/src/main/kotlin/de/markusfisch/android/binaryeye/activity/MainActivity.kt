@@ -23,6 +23,7 @@ import de.markusfisch.android.binaryeye.fragment.PreferencesFragment
 import de.markusfisch.android.binaryeye.net.isEncodeDeeplink
 import de.markusfisch.android.binaryeye.view.colorSystemAndToolBars
 import de.markusfisch.android.binaryeye.view.initBars
+import io.tolgee.TolgeeContextWrapper
 
 class MainActivity : AppCompatActivity() {
 	override fun onRequestPermissionsResult(
@@ -53,7 +54,7 @@ class MainActivity : AppCompatActivity() {
 
 	override fun attachBaseContext(base: Context?) {
 		base?.applyLocale(prefs.customLocale)
-		super.attachBaseContext(base)
+		super.attachBaseContext(TolgeeContextWrapper.wrap(base))
 	}
 
 	override fun onCreate(state: Bundle?) {

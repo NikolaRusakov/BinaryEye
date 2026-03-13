@@ -31,6 +31,7 @@ import de.markusfisch.android.zxingcpp.ZxingCpp
 import de.markusfisch.android.zxingcpp.ZxingCpp.Binarizer
 import de.markusfisch.android.zxingcpp.ZxingCpp.ReaderOptions
 import de.markusfisch.android.zxingcpp.ZxingCpp.Result
+import io.tolgee.TolgeeContextWrapper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -61,7 +62,7 @@ class PickActivity : AppCompatActivity() {
 
 	override fun attachBaseContext(base: Context?) {
 		base?.applyLocale(prefs.customLocale)
-		super.attachBaseContext(base)
+		super.attachBaseContext(TolgeeContextWrapper.wrap(base))
 	}
 
 	override fun onCreate(state: Bundle?) {

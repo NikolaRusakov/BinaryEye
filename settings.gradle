@@ -1,5 +1,6 @@
 pluginManagement {
 	repositories {
+//		flatDir { dirs 'libs' }
 		google()
 		mavenCentral()
 		gradlePluginPortal()
@@ -12,6 +13,15 @@ plugins {
 dependencyResolutionManagement {
 	repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
 	repositories {
+//		exclusiveContent {
+//			forRepository {
+////				flatDir { dirs 'libs' }
+//				mavenLocal()
+//			}
+//			filter {
+//				includeGroup "io.tolgee"
+//			}
+//		}
 		google()
 		mavenCentral()
 		maven { url 'https://jitpack.io' }

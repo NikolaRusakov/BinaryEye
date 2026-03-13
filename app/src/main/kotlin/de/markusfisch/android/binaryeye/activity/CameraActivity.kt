@@ -56,6 +56,7 @@ import de.markusfisch.android.zxingcpp.ZxingCpp.Binarizer
 import de.markusfisch.android.zxingcpp.ZxingCpp.ReaderOptions
 import de.markusfisch.android.zxingcpp.ZxingCpp.Result
 import de.markusfisch.android.zxingcpp.ZxingCpp.TextMode
+import io.tolgee.TolgeeContextWrapper
 import java.io.FileInputStream
 import java.util.Scanner
 import kotlin.math.max
@@ -120,7 +121,7 @@ class CameraActivity : AppCompatActivity() {
 
 	override fun attachBaseContext(base: Context?) {
 		base?.applyLocale(prefs.customLocale)
-		super.attachBaseContext(base)
+		super.attachBaseContext(TolgeeContextWrapper.wrap(base))
 	}
 
 	override fun onCreate(state: Bundle?) {

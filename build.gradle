@@ -7,6 +7,8 @@ buildscript {
 	}
 
 	repositories {
+//		flatDir { dirs 'libs' }
+//		mavenLocal()
 		google()
 		mavenCentral()
 	}
