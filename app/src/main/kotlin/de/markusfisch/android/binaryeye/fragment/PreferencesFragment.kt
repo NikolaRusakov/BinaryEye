@@ -9,12 +9,13 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.Bundle
-import android.support.annotation.RequiresApi
-import android.support.v14.preference.MultiSelectListPreference
-import android.support.v7.preference.ListPreference
-import android.support.v7.preference.Preference
-import android.support.v7.preference.PreferenceFragmentCompat
-import android.support.v7.preference.PreferenceGroup
+import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
+import androidx.preference.MultiSelectListPreference
+import androidx.preference.ListPreference
+import androidx.preference.Preference
+import androidx.preference.PreferenceGroup
+import androidx.preference.PreferenceFragmentCompat
 import de.markusfisch.android.binaryeye.R
 import de.markusfisch.android.binaryeye.activity.SplashActivity
 import de.markusfisch.android.binaryeye.app.addFragment
@@ -36,7 +37,7 @@ class PreferencesFragment : PreferenceFragmentCompat() {
 			key: String?
 		) {
 			key ?: return
-			val preference = findPreference(key) ?: return
+			val preference = findPreference<Preference>(key) ?: return
 			if (preference.key != PROFILE) {
 				prefs.update()
 			}
@@ -75,8 +76,7 @@ class PreferencesFragment : PreferenceFragmentCompat() {
 		// Refresh the preferences.
 		preferenceScreen = null
 		setPreferencesFromResource(R.xml.preferences, rootKey)
-		preferenceScreen.sharedPreferences
-			.registerOnSharedPreferenceChangeListener(changeListener)
+		preferenceScreen.sharedPreferences?.registerOnSharedPreferenceChangeListener(changeListener)
 		setSummaries(preferenceScreen)
 
 		wireProfiles()
@@ -86,10 +86,10 @@ class PreferencesFragment : PreferenceFragmentCompat() {
 	}
 
 	private fun wireProfiles() {
-		findPreference(PROFILE).apply {
+		findPreference<Preference>(PROFILE).apply {
 			updateProfileSummary(this)
-			onPreferenceClickListener = Preference.OnPreferenceClickListener {
-				activity?.supportFragmentManager?.addFragment(
+			this?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+				parentFragmentManager.addFragment(
 					ProfilesFragment()
 				)
 				true
@@ -98,10 +98,10 @@ class PreferencesFragment : PreferenceFragmentCompat() {
 	}
 
 	private fun wireAutomatedActions() {
-		findPreference(AUTOMATED_ACTIONS).apply {
+		findPreference<Preference>(AUTOMATED_ACTIONS).apply {
 			updateAutomatedActionsSummary(this)
-			onPreferenceClickListener = Preference.OnPreferenceClickListener {
-				activity?.supportFragmentManager?.addFragment(
+			this?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+				parentFragmentManager.addFragment(
 					AutomatedActionsFragment()
 				)
 				true
@@ -114,18 +114,18 @@ class PreferencesFragment : PreferenceFragmentCompat() {
 			activity?.hasBluetoothPermission() == true
 		) {
 			setBluetoothHosts(
-				findPreference("send_scan_bluetooth_host") as ListPreference
+				findPreference<ListPreference>("send_scan_bluetooth_host")
 			)
 		}
 	}
 
 	private fun wireClearNetworkPreferences() {
-		findPreference("clear_network_suggestions").apply {
+		findPreference<Preference>("clear_network_suggestions").apply {
 			if (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
 				// From R+ we can query past network suggestions and
 				// make them editable.
-				setOnPreferenceClickListener {
-					activity?.supportFragmentManager?.addFragment(
+				this?.setOnPreferenceClickListener {
+					parentFragmentManager.addFragment(
 						NetworkSuggestionsFragment()
 					)
 					true
@@ -135,13 +135,13 @@ class PreferencesFragment : PreferenceFragmentCompat() {
 				// Note that previous versions of this app allowed
 				// adding network suggestions on Q as well, so we
 				// need to keep this option.
-				setOnPreferenceClickListener {
+				this?.setOnPreferenceClickListener {
 					context.askToClearNetworkSuggestions()
 					true
 				}
 			} else {
 				// There are no network suggestions below Q.
-				isVisible = false
+//				isVisible = false
 			}
 		}
 	}
@@ -176,10 +176,10 @@ class PreferencesFragment : PreferenceFragmentCompat() {
 			loadPreferences()
 		}
 		activity?.setTitle(R.string.preferences)
-		findPreference(AUTOMATED_ACTIONS)?.let {
+		findPreference<Preference>(AUTOMATED_ACTIONS)?.let {
 			updateAutomatedActionsSummary(it)
 		}
-		findPreference(PROFILE)?.let {
+		findPreference<Preference>(PROFILE)?.let {
 			updateProfileSummary(it)
 		}
 		listView.setPaddingFromWindowInsets()
@@ -189,16 +189,13 @@ class PreferencesFragment : PreferenceFragmentCompat() {
 
 	override fun onPause() {
 		super.onPause()
-		preferenceScreen.sharedPreferences
-			.unregisterOnSharedPreferenceChangeListener(changeListener)
+		preferenceScreen.sharedPreferences?.unregisterOnSharedPreferenceChangeListener(changeListener)
 	}
 
 	override fun onDisplayPreferenceDialog(preference: Preference) {
 		if (preference is UrlPreference) {
-			val fm = fragmentManager
 			UrlDialogFragment.newInstance(preference.key).apply {
-				setTargetFragment(this@PreferencesFragment, 0)
-				show(fm, null)
+				show(childFragmentManager, null)
 			}
 		} else if (preference.key == "send_scan_bluetooth_host") {
 			val ac = activity ?: return
@@ -244,9 +241,9 @@ class PreferencesFragment : PreferenceFragmentCompat() {
 		}
 	}
 
-	private fun updateAutomatedActionsSummary(preference: Preference) {
+	private fun updateAutomatedActionsSummary(preference: Preference?) {
 		val count = prefs.automatedActions.size
-		preference.summary = if (count == 0) {
+		preference?.summary = if (count == 0) {
 			getString(R.string.automated_actions_none)
 		} else {
 			resources.getQuantityString(
@@ -257,8 +254,8 @@ class PreferencesFragment : PreferenceFragmentCompat() {
 		}
 	}
 
-	private fun updateProfileSummary(preference: Preference) {
-		preference.summary = prefs.profile ?: getString(R.string.profile_default)
+	private fun updateProfileSummary(preference: Preference?) {
+		preference?.summary = prefs.profile ?: getString(R.string.profile_default)
 		lastProfile = prefs.profile
 	}
 

@@ -7,8 +7,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.DocumentsContract
-import android.support.design.widget.FloatingActionButton
-import android.support.v4.app.Fragment
 import android.text.Editable
 import android.text.Html
 import android.text.Spannable
@@ -27,6 +25,8 @@ import android.widget.ImageView
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import de.markusfisch.android.binaryeye.R
 import de.markusfisch.android.binaryeye.actions.ActionRegistry
 import de.markusfisch.android.binaryeye.actions.mail.MatMsg
@@ -313,7 +313,7 @@ class DecodeFragment : Fragment() {
 				v.setOnClickListener {
 					v.context.hideSoftKeyboard(contentView)
 					v.post {
-						fragmentManager?.addFragment(
+						parentFragmentManager.addFragment(
 							BarcodeFragment.newInstance(barcode)
 						)
 					}
@@ -533,7 +533,7 @@ class DecodeFragment : Fragment() {
 			}
 
 			R.id.create -> {
-				fragmentManager?.addFragment(
+				parentFragmentManager.addFragment(
 					EncodeFragment.newInstance(
 						if (isBinary) originalBytes else content,
 						format
@@ -589,8 +589,8 @@ class DecodeFragment : Fragment() {
 	}
 
 	private fun backOrFinish() {
-		val fm = fragmentManager
-		if (fm != null && fm.backStackEntryCount > 0) {
+		val fm = parentFragmentManager
+		if (fm.backStackEntryCount > 0) {
 			fm.popBackStack()
 		} else {
 			activity?.finish()

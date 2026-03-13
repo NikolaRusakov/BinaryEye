@@ -5,7 +5,7 @@ android {
 	compileSdk sdk_version
 
 	defaultConfig {
-		minSdk 9
+		minSdk 21
 		targetSdk sdk_version
 
 		versionCode 159
@@ -69,11 +69,10 @@ dependencies {
 	implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 	implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2"
 
-	// Support
-	implementation "com.android.support:appcompat-v7:$support_version"
-	implementation "com.android.support:design:$support_version"
-	implementation "com.android.support:preference-v7:$support_version"
-	implementation "com.android.support:preference-v14:$support_version"
+	// AndroidX
+	implementation "androidx.appcompat:appcompat:1.7.1"
+	implementation "com.google.android.material:material:1.13.0"
+	implementation "androidx.preference:preference:1.2.1"
 
 	// External
 	implementation 'com.github.markusfisch:CameraView:1.10.0'
@@ -85,6 +84,7 @@ dependencies {
 //	implementation 'io.tolgee:tolgee-mobile-kotlin-sdk:v1.0.0-alpha04'
 //	implementation 'com.github.tolgee:tolgee-mobile-kotlin-sdk:v1.0.0-alpha04
 	implementation 'com.github.NikolaRusakov.tolgee-mobile-kotlin-sdk:compose:v1.0.0-alpha042'
+	implementation 'androidx.annotation:annotation-jvm:1.9.1'
 
 	// Testing
 	testImplementation 'junit:junit:4.13.2'

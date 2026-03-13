@@ -1,8 +1,8 @@
 package de.markusfisch.android.binaryeye.app
 
 import android.annotation.SuppressLint
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import de.markusfisch.android.binaryeye.R
 
 fun FragmentManager.setFragment(fragment: Fragment) {

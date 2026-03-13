@@ -1,0 +1,14 @@
+{
+  "$schema": "https://docs.tolgee.io/cli-schema.json",
+  "apiUrl": "https://app.tolgee.io",
+  "projectId": "29352",
+  "format": "ANDROID_XML",
+  "push": {
+    "filesTemplate": "./app/src/main/res/values-{androidLanguageTag}/strings.xml",
+    "language": ["en", "cs", "de", "es", "uk"]
+  },
+  "pull": {
+    "path": ".",
+    "fileStructureTemplate": "./app/src/main/res/values-{androidLanguageTag}/strings.{extension}"
+  }
+}

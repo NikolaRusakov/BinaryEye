@@ -6,8 +6,8 @@ import android.content.SharedPreferences
 import android.graphics.Point
 import android.media.ToneGenerator
 import android.os.Build
-import android.preference.PreferenceManager
-import android.support.annotation.RequiresApi
+import androidx.annotation.RequiresApi
+import androidx.preference.PreferenceManager
 import de.markusfisch.android.binaryeye.automation.AutomatedAction
 import de.markusfisch.android.binaryeye.automation.AutomatedAction.Companion.fromJsonArray
 import de.markusfisch.android.binaryeye.automation.AutomatedAction.Companion.toJsonArray
