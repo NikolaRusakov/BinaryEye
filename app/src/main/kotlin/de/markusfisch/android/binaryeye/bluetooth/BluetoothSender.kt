@@ -3,7 +3,7 @@ package de.markusfisch.android.binaryeye.bluetooth
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothSocket
-import android.support.v7.preference.ListPreference
+import androidx.preference.ListPreference
 import de.markusfisch.android.binaryeye.database.Scan
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -34,16 +34,16 @@ fun Scan.sendBluetoothAsync(
 	}
 }
 
-fun setBluetoothHosts(listPref: ListPreference) {
+fun setBluetoothHosts(listPref: ListPreference?) {
 	try {
 		val devices = blue.bondedDevices ?: return
-		listPref.entries = devices.map {
+		listPref?.entries = devices.map {
 			it.name
 		}.toTypedArray()
-		listPref.entryValues = devices.map {
+		listPref?.entryValues = devices.map {
 			it.address
 		}.toTypedArray()
-		listPref.callChangeListener(listPref.value)
+		listPref?.callChangeListener(listPref.value)
 	} catch (_: SecurityException) {
 		// Do nothing, either the user has denied Bluetooth access
 		// or the permission was removed by the system. We're catching

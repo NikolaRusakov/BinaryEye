@@ -4,14 +4,14 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
 import android.view.View
 import android.view.WindowManager
 import android.widget.AbsListView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import de.markusfisch.android.binaryeye.R
 
 val systemBarListViewScrollListener = object : AbsListView.OnScrollListener {
@@ -43,7 +43,8 @@ val systemBarRecyclerViewScrollListener = object : RecyclerView.OnScrollListener
 			layoutManager.findFirstCompletelyVisibleItemPosition() != 0
 		val scrollable = scrolled ||
 				layoutManager.findLastVisibleItemPosition() <
-				recyclerView.adapter.itemCount - 1
+				//TODO: can be null
+                recyclerView.adapter?.itemCount!!
 		colorSystemAndToolBars(recyclerView.context, scrolled, scrollable)
 	}
 
@@ -67,6 +68,7 @@ fun AppCompatActivity.initBars() {
 		window.setSoftInputMode(
 			WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
 		)
+		@Suppress("DEPRECATION")
 		window.decorView.systemUiVisibility =
 			View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
 					View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
@@ -75,10 +77,10 @@ fun AppCompatActivity.initBars() {
 	colorSystemAndToolBars(this)
 	setPaddingFromWindowInsets(
 		findViewById(R.id.main),
-		(findViewById(R.id.toolbar) as Toolbar).apply {
+		findViewById<Toolbar>(R.id.toolbar).apply {
 			setSupportActionBar(this)
 		},
-		findViewById(R.id.navbar)?.apply {
+		findViewById<Toolbar>(R.id.navbar)?.apply {
 			setBackgroundColor(translucentPrimaryColor)
 		}
 	)
@@ -123,7 +125,7 @@ fun colorSystemAndToolBars(
 				0
 			}
 		} else {
-			activity.findViewById(R.id.navbar)?.apply {
+			activity.findViewById<Toolbar>(R.id.navbar)?.apply {
 				visibility = if (scrolled || scrollable) {
 					View.VISIBLE
 				} else {
@@ -139,6 +141,7 @@ fun colorSystemAndToolBars(
 			actionBarBackground
 		} else {
 			// ColorDrawable.setColor() doesn't exist pre Honeycomb.
+			@Suppress("DEPRECATION")
 			ColorDrawable(topColor)
 		}
 	)

@@ -4,8 +4,8 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.SwitchCompat
+import androidx.fragment.app.Fragment
+import androidx.appcompat.widget.SwitchCompat
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater

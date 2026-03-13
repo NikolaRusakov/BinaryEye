@@ -8,13 +8,6 @@ import android.database.Cursor
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
-import android.support.v4.app.ActivityCompat
-import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.view.ActionMode
-import android.support.v7.widget.SearchView
-import android.support.v7.widget.SwitchCompat
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -23,6 +16,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ListView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.ActionMode
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.SwitchCompat
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import de.markusfisch.android.binaryeye.R
 import de.markusfisch.android.binaryeye.adapter.ScansAdapter
 import de.markusfisch.android.binaryeye.app.addFragment
@@ -263,7 +263,7 @@ class HistoryFragment : Fragment() {
 	override fun onOptionsItemSelected(item: MenuItem): Boolean {
 		return when (item.itemId) {
 			R.id.clear -> {
-				context.askToRemoveScans()
+				context?.askToRemoveScans()
 				true
 			}
 
@@ -273,7 +273,7 @@ class HistoryFragment : Fragment() {
 			}
 
 			R.id.share_as_file -> {
-				context.pickListSeparatorAndShare(true)
+                context?.pickListSeparatorAndShare(true)
 				true
 			}
 
@@ -490,12 +490,12 @@ class HistoryFragment : Fragment() {
 				text?.let {
 					withContext(Dispatchers.Main) {
 						if (asFile) {
-							context.shareAsFile(
+							context?.shareAsFile(
 								it,
 								String.format("scans.%s", ext)
 							)
 						} else {
-							context.shareText(it)
+							context?.shareText(it)
 						}
 					}
 				}

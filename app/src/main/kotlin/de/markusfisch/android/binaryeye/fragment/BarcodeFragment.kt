@@ -7,7 +7,6 @@ import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.os.Build
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -18,6 +17,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import de.markusfisch.android.binaryeye.R
 import de.markusfisch.android.binaryeye.app.db
 import de.markusfisch.android.binaryeye.app.hasWritePermission
@@ -107,7 +107,7 @@ class BarcodeFragment : Fragment() {
 			message?.let {
 				ac.toast(message)
 			}
-			fragmentManager.popBackStack()
+			fragmentManager?.popBackStack()
 			return null
 		}
 
@@ -217,7 +217,7 @@ class BarcodeFragment : Fragment() {
 					barcode.format
 				)
 				addToHistoryItem.isVisible = false
-				context.toast(R.string.added_to_history)
+				context?.toast(R.string.added_to_history)
 				true
 			}
 
@@ -232,7 +232,7 @@ class BarcodeFragment : Fragment() {
 			}
 
 			R.id.export_to_file -> {
-				context.pickFileType(R.string.export_as) { fileType ->
+				context?.pickFileType(R.string.export_as) { fileType ->
 					when (fileType) {
 						FileType.PNG,
 						FileType.JPG -> askForSize { size ->
