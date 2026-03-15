@@ -78,17 +78,16 @@ dependencies {
 	implementation 'com.github.markusfisch:CameraView:1.10.0'
 	implementation 'com.github.markusfisch:ScalingImageView:1.4.3'
 	implementation 'com.github.markusfisch:zxing-cpp:v2.3.0.4'
-//	Local Maven package
-//	implementation 'io.tolgee:mobile-kotlin-sdk:v1.0.0-alpha042'
-//	Remote Maven package
-//	implementation 'io.tolgee:tolgee-mobile-kotlin-sdk:v1.0.0-alpha042'
-	implementation('com.github.NikolaRusakov.tolgee-mobile-kotlin-sdk:core:v1.0.0-alpha042') {
+    implementation 'androidx.multidex:multidex:2.0.1'
+	implementation('com.github.NikolaRusakov.tolgee-mobile-kotlin-sdk:core:v1.0.0-alpha044') {
 		exclude group: "dev.datlag.tooling", module: "tooling-android"
 		exclude group: "dev.datlag.tooling", module: "tooling-async-android"
 		exclude group: 'de.comahe.i18n4k', module: 'i18n4k-cldr-plural-rules-android'
 	}
-	implementation "dev.datlag.tooling:tooling-android:1.8.2"
-		// Testing
+	implementation('com.github.NikolaRusakov.kotlin-kmp-tooling:tooling-async-android:v1.3.1'){
+
+	}
+	// Testing
 	testImplementation 'junit:junit:4.13.2'
 	testImplementation 'org.robolectric:robolectric:4.16.1'
 }

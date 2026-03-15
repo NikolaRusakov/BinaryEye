@@ -6,12 +6,14 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import de.markusfisch.android.binaryeye.R
 import de.markusfisch.android.binaryeye.app.PERMISSION_LOCATION
 import de.markusfisch.android.binaryeye.app.PERMISSION_WRITE
-import de.markusfisch.android.binaryeye.app.applyLocale
 import de.markusfisch.android.binaryeye.app.permissionGrantedCallback
 import de.markusfisch.android.binaryeye.app.prefs
 import de.markusfisch.android.binaryeye.app.setFragment
@@ -23,15 +25,21 @@ import de.markusfisch.android.binaryeye.fragment.PreferencesFragment
 import de.markusfisch.android.binaryeye.net.isEncodeDeeplink
 import de.markusfisch.android.binaryeye.view.colorSystemAndToolBars
 import de.markusfisch.android.binaryeye.view.initBars
+import io.tolgee.Tolgee
+import io.tolgee.TolgeeAndroid
 import io.tolgee.TolgeeContextWrapper
+import kotlinx.coroutines.launch
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), Tolgee.ChangeListener  {
+private val tolgee: TolgeeAndroid = Tolgee.instance
+
 	override fun onRequestPermissionsResult(
 		requestCode: Int,
 		permissions: Array<String>,
 		grantResults: IntArray
 	) {
-		when (requestCode) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
 			PERMISSION_LOCATION, PERMISSION_WRITE -> if (
 				grantResults.isNotEmpty() &&
 				grantResults[0] == PackageManager.PERMISSION_GRANTED
@@ -44,7 +52,7 @@ class MainActivity : AppCompatActivity() {
 
 	override fun onSupportNavigateUp(): Boolean {
 		val fm = supportFragmentManager
-		if (fm != null && fm.backStackEntryCount > 0) {
+		if (fm.backStackEntryCount > 0) {
 			fm.popBackStack()
 		} else {
 			finish()
@@ -53,13 +61,27 @@ class MainActivity : AppCompatActivity() {
 	}
 
 	override fun attachBaseContext(base: Context?) {
-		base?.applyLocale(prefs.customLocale)
 		super.attachBaseContext(TolgeeContextWrapper.wrap(base))
 	}
 
 	override fun onCreate(state: Bundle?) {
 		super.onCreate(state)
+		tolgee.addChangeListener(this)
 		setContentView(R.layout.activity_main)
+		val context = applicationContext
+		lifecycleScope.launch {
+			tolgee.changeFlow.collect {
+				// Re-translate views without recreating the Activity for smoother UX
+				tolgee.retranslate(this@MainActivity) // or recreate() for more complex activities
+
+				// Make sure the app title is updated
+				// Make sure the app title stays updated
+				setTitle(tolgee.t(context, R.string.scan_code))
+
+				// Still need to manually update parameterized strings and plurals
+				// updateParameterizedStrings()
+			}
+		}
 
 		initBars()
 		supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -76,6 +98,41 @@ class MainActivity : AppCompatActivity() {
 			}
 			supportFragmentManager?.setFragment(fragment)
 		}
+
+		findViewById<FloatingActionButton>(R.id.language).setOnClickListener {
+			showLanguageDialog()
+		}
+	}
+
+	private fun showLanguageDialog() {
+		val names = resources.getStringArray(R.array.locale_names)
+		val values = resources.getStringArray(R.array.locale_values)
+		val currentIndex = values.indexOf(prefs.customLocale).coerceAtLeast(0)
+		AlertDialog.Builder(this)
+			.setTitle(R.string.custom_locale)
+			.setSingleChoiceItems(names, currentIndex) { dialog, which ->
+				val locale = values[which]
+				prefs.customLocale = locale
+				tolgee.setLocale(locale)
+				tolgee.preload(this)
+				dialog.dismiss()
+
+			}
+			.setNegativeButton(android.R.string.cancel, null)
+			.show()
+	}
+
+	override fun onTranslationsChanged() {
+
+		// Re-translate views without recreating the Activity for smoother UX
+		tolgee.retranslate(this) // or recreate() for more complex activities
+
+
+		setTitle(tolgee.t(applicationContext, R.string.scan_code))
+
+
+		// Still need to manually update parameterized strings and plurals
+		updateParameterizedStrings()
 	}
 
 	companion object {

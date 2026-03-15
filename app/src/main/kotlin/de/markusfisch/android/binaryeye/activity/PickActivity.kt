@@ -63,7 +63,6 @@ class PickActivity : AppCompatActivity() {
 	private var result: Result? = null
 
 	override fun attachBaseContext(base: Context?) {
-		base?.applyLocale(prefs.customLocale)
 		super.attachBaseContext(TolgeeContextWrapper.wrap(base))
 	}
 

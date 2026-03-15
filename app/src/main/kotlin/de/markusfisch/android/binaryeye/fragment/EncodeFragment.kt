@@ -28,10 +28,12 @@ import de.markusfisch.android.binaryeye.view.hideSoftKeyboard
 import de.markusfisch.android.binaryeye.view.setPaddingFromWindowInsets
 import de.markusfisch.android.binaryeye.widget.toast
 import de.markusfisch.android.zxingcpp.ZxingCpp.BarcodeFormat
+import io.tolgee.Tolgee
 import java.io.InputStream
 import kotlin.math.min
 
 class EncodeFragment : Fragment() {
+	val tolgee = Tolgee.instance
 	private lateinit var formatView: Spinner
 	private lateinit var ecLabel: TextView
 	private lateinit var ecSpinner: Spinner
@@ -91,7 +93,7 @@ class EncodeFragment : Fragment() {
 		state: Bundle?
 	): View? {
 		val ac = activity ?: return null
-		ac.setTitle(R.string.compose_barcode)
+    context?.let { ac.setTitle(tolgee.t(it,R.string.compose_barcode)) }
 
 		val view = inflater.inflate(
 			R.layout.fragment_encode,
@@ -226,6 +228,10 @@ class EncodeFragment : Fragment() {
 	}
 
 	override fun onOptionsItemSelected(item: MenuItem): Boolean {
+			val pickFile= context?.let {
+        tolgee.t(it,
+          R.string.pick_file)
+      }
 		return when (item.itemId) {
 			R.id.pick_file -> {
 				startActivityForResult(
@@ -233,7 +239,7 @@ class EncodeFragment : Fragment() {
 						Intent(Intent.ACTION_GET_CONTENT).apply {
 							type = "*/*"
 						},
-						getString(R.string.pick_file)
+						pickFile
 					),
 					PICK_FILE_RESULT_CODE
 				)
@@ -287,7 +293,11 @@ class EncodeFragment : Fragment() {
 		}
 		var text = contentView.text.toString()
 		if (text.isEmpty()) {
-			toast(R.string.error_no_content)
+
+			toast(context?.let {
+				tolgee.t(it,
+					R.string.error_no_content)
+			})
 			return null
 		}
 		if (!unescapeCheckBox.isChecked) {
@@ -310,8 +320,12 @@ class EncodeFragment : Fragment() {
 	}
 
 	private fun setEncodeByteArray() {
+    val binaryData = context?.let {
+      tolgee.t(it,
+        R.string.binary_data)
+    }
 		contentView.text = null
-		contentView.hint = getString(R.string.binary_data)
+		contentView.hint = binaryData
 		contentView.isEnabled = false
 		unescapeCheckBox.isEnabled = false
 	}

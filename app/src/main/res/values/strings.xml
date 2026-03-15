@@ -92,6 +92,9 @@
 	<string name="current_profile">Profile: %s</string>
 	<string name="custom_locale">Custom language</string>
 	<string name="follow_system_settings">Follow system settings</string>
+	<string name="tolgee_active">Use Tolgee for translations</string>
+	<string name="tolgee_active_summary">Enable to use the Tolgee mobile SDK for over-the-air translations.</string>
+	<string name="selected_locale">Selected locale: %s</string>
 	<string name="show_crop_handle">Show cropping limiter</string>
 	<string name="show_crop_handle_summary">Restrict scanning to a customizable region.</string>
 	<string name="barcode_formats">Barcode formats</string>
