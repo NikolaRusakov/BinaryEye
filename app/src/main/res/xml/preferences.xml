@@ -163,6 +163,13 @@
 			android:summary="@string/brighten_screen_summary"/>
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/locale_category">
+		<androidx.preference.SwitchPreferenceCompat
+			android:defaultValue="true"
+			android:key="tolgee_active"
+			android:title="@string/tolgee_active"
+			android:summary="@string/tolgee_active_summary"/>
+		<de.markusfisch.android.binaryeye.preference.LocaleSwitcherPreference
+			android:key="tolgee_locale_switcher" />
 		<ListPreference
 			android:key="custom_locale"
 			android:title="@string/custom_locale"

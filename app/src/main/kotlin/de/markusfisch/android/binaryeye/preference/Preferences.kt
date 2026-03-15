@@ -181,11 +181,16 @@ class Preferences {
 			apply(SEND_SCAN_BLUETOOTH_HOST, value)
 			field = value
 		}
-	var customLocale: String = ""
+	var customLocale: String = "cs"
 		set(value) {
 			// Make sure this setting is written immediately because
 			// the app is about to restart.
 			commit(CUSTOM_LOCALE, value)
+			field = value
+		}
+	var tolgeeActive = true
+		set(value) {
+			apply(TOLGEE_ACTIVE, value)
 			field = value
 		}
 	var indexOfLastSelectedFormat: Int = 0
@@ -379,6 +384,10 @@ class Preferences {
 		preferences.getString(CUSTOM_LOCALE, customLocale)?.also {
 			customLocale = it
 		}
+		tolgeeActive = preferences.getBoolean(
+			TOLGEE_ACTIVE,
+			tolgeeActive
+		)
 		indexOfLastSelectedFormat = preferences.getInt(
 			INDEX_OF_LAST_SELECTED_FORMAT,
 			indexOfLastSelectedFormat
@@ -516,6 +525,7 @@ class Preferences {
 		private const val SEND_SCAN_BLUETOOTH = "send_scan_bluetooth"
 		private const val SEND_SCAN_BLUETOOTH_HOST = "send_scan_bluetooth_host"
 		private const val CUSTOM_LOCALE = "custom_locale"
+		private const val TOLGEE_ACTIVE = "tolgee_active"
 		private const val INDEX_OF_LAST_SELECTED_FORMAT = "index_of_last_selected_format"
 		private const val INDEX_OF_LAST_SELECTED_EC_LEVEL = "index_of_last_selected_ec_level"
 		private const val FREE_ROTATION = "free_rotation"

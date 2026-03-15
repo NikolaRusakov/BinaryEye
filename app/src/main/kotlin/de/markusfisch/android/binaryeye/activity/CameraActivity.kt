@@ -89,6 +89,8 @@ class CameraActivity : AppCompatActivity() {
 	private var fallbackBuffer: IntArray? = null
 	private var requestCameraPermission = true
 
+    val tolgee = Tolgee.instance
+
 	override fun onRequestPermissionsResult(
 		requestCode: Int,
 		permissions: Array<String>,
@@ -123,17 +125,17 @@ class CameraActivity : AppCompatActivity() {
 	}
 
 	override fun attachBaseContext(base: Context?) {
-		base?.applyLocale(prefs.customLocale)
 		super.attachBaseContext(TolgeeContextWrapper.wrap(base))
+//		base?.applyLocale(prefs.customLocale)
 	}
 
 	override fun onCreate(state: Bundle?) {
 		super.onCreate(state)
 		setContentView(R.layout.activity_camera)
-		val tolgee = Tolgee.instance
 		// Necessary to get the right translation after setting a
 		// custom locale.
-		setTitle(tolgee.t(applicationContext, R.string.scan_code))
+		val scanCode=tolgee.t(applicationContext, R.string.scan_code)
+		setTitle(scanCode)
 
 		initBars()
 

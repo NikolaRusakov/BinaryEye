@@ -82,12 +82,17 @@ dependencies {
 //	implementation 'io.tolgee:mobile-kotlin-sdk:v1.0.0-alpha042'
 //	Remote Maven package
 //	implementation 'io.tolgee:tolgee-mobile-kotlin-sdk:v1.0.0-alpha042'
-	implementation('com.github.NikolaRusakov.tolgee-mobile-kotlin-sdk:core:v1.0.0-alpha042') {
+	implementation('com.github.NikolaRusakov.tolgee-mobile-kotlin-sdk:core:v1.0.0-alpha044') {
 		exclude group: "dev.datlag.tooling", module: "tooling-android"
 		exclude group: "dev.datlag.tooling", module: "tooling-async-android"
 		exclude group: 'de.comahe.i18n4k', module: 'i18n4k-cldr-plural-rules-android'
 	}
-	implementation "dev.datlag.tooling:tooling-android:1.8.2"
+	implementation('com.github.NikolaRusakov.kotlin-kmp-tooling:tooling-async-android:v1.3.1'){
+
+	}
+//	implementation('com.github.NikolaRusakov:kotlin-kmp-tooling-android:v1.3.1')
+//	implementation('com.github.NikolaRusakov.kotlin-kmp-tooling:tooling-async-android:v1.3.1')
+//	implementation "dev.datlag.tooling:tooling-android:1.8.2"
 		// Testing
 	testImplementation 'junit:junit:4.13.2'
 	testImplementation 'org.robolectric:robolectric:4.16.1'
