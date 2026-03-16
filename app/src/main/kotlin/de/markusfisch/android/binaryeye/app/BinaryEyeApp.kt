@@ -2,7 +2,7 @@ package de.markusfisch.android.binaryeye.app
 
 import android.app.Application
 import de.comahe.i18n4k.createLocale
-import de.markusfisch.android.binaryeye.BuildConfig
+//import de.markusfisch.android.binaryeye.BuildConfig
 import de.markusfisch.android.binaryeye.R
 import de.markusfisch.android.binaryeye.database.Database
 import de.markusfisch.android.binaryeye.preference.Preferences
@@ -16,7 +16,7 @@ val db = Database()
 val prefs = Preferences()
 
 class BinaryEyeApp : Application() {
-  override fun onCreate() {
+override fun onCreate() {
     super.onCreate()
     db.open(this)
     prefs.init(this)
@@ -31,7 +31,7 @@ class BinaryEyeApp : Application() {
       contentDelivery {
         url = "https://cdn.tolg.ee/dbbedc13592d9ea9945332d83c1dc800"
         path = { "values-$it/strings.xml" }
-        storage = TolgeeStorageProviderAndroid(this@BinaryEyeApp, BuildConfig.VERSION_CODE)
+        storage = TolgeeStorageProviderAndroid(this@BinaryEyeApp, 1)
         availableLocales(availableLocales)
       }
       defaultLanguage("cs")

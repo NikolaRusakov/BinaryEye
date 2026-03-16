@@ -335,7 +335,6 @@ class DecodeFragment : Fragment() {
 
 	private fun TableLayout.fillDataView(text: String, bytes: ByteArray) {
 		val tolgee = Tolgee.instance
-
 		val items = LinkedHashMap<Any, CharSequence?>()
 		when (prefs.showChecksum) {
 			"CRC4" -> items[R.string.crc4] = String.format("%X", crc4(bytes))
