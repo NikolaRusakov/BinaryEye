@@ -6,7 +6,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import androidx.core.content.FileProvider
-import de.markusfisch.android.binaryeye.BuildConfig
+import androidx.multidex.BuildConfig
+//import de.markusfisch.android.binaryeye.BuildConfig
 import de.markusfisch.android.binaryeye.R
 import de.markusfisch.android.binaryeye.widget.toast
 import java.io.File

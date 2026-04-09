@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.jetbrains.kotlin.android'
 
 android {
 	namespace "de.markusfisch.android.binaryeye"
@@ -10,7 +11,8 @@ android {
 
 		versionCode 159
 		versionName '1.68.5'
-	}
+        multiDexEnabled true
+    }
 
 	signingConfigs {
 		release {
@@ -59,9 +61,21 @@ android {
 
 	// Required since Gradle 8.
 	compileOptions {
-		sourceCompatibility = JavaVersion.VERSION_1_8
-		targetCompatibility = JavaVersion.VERSION_1_8
+		sourceCompatibility  JavaVersion.VERSION_17
+		targetCompatibility  JavaVersion.VERSION_17
 	}
+    kotlin {
+        jvmToolchain(8)
+    }
+    dependenciesInfo {
+        includeInApk true
+        includeInBundle true
+    }
+    buildToolsVersion '36.0.0'
+    ndkVersion '29.0.14206865'
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17
+    }
 }
 
 dependencies {
@@ -78,6 +92,7 @@ dependencies {
 	implementation 'com.github.markusfisch:CameraView:1.10.0'
 	implementation 'com.github.markusfisch:ScalingImageView:1.4.3'
 	implementation 'com.github.markusfisch:zxing-cpp:v2.3.0.4'
+    implementation 'androidx.multidex:multidex:2.0.1'
 //	Local Maven package
 //	implementation 'io.tolgee:mobile-kotlin-sdk:v1.0.0-alpha042'
 //	Remote Maven package
@@ -102,3 +117,4 @@ java {
 		languageVersion = JavaLanguageVersion.of(17)
 	}
 }
+
