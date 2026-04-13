@@ -129,10 +129,6 @@ private val tolgee: TolgeeAndroid = Tolgee.instance
 
 
 		setTitle(tolgee.t(applicationContext, R.string.scan_code))
-
-
-		// Still need to manually update parameterized strings and plurals
-		updateParameterizedStrings()
 	}
 
 	companion object {
